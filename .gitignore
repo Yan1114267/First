@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# 应用运行时生成的数据（属于用户数据，不进版本库）
+tasks.json
+
+# 编辑器/系统
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
