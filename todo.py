@@ -23,7 +23,7 @@ class TodoApp:
 
     def __init__(self, root):
         self.root = root
-        self.root.title("我的待办清单")
+        self.root.title("吃什么呢~？")
         self.root.geometry("440x560")
         self.root.minsize(380, 420)
 
@@ -75,7 +75,8 @@ class TodoApp:
 
         for text, cmd in (("完成 / 取消", self.toggle_done),
                           ("删除", self.delete_selected),
-                          ("清除已完成", self.clear_done)):
+                          ("清除已吃掉", self.clear_done),
+                          ("全部吃了", self.complete_all)):
             tk.Button(btn_row, text=text, font=("Microsoft YaHei UI", 10),
                       command=cmd).pack(side="left", padx=(0, 8))
 
@@ -95,7 +96,7 @@ class TodoApp:
             prefix = "✓ " if task["done"] else "○ "
             self.listbox.insert("end", prefix + task["text"])
             if task["done"]:
-                self.listbox.itemconfig(i, fg="#999999")   # 已完成的变灰
+                self.listbox.itemconfig(i, fg="#FEFEFE")   # 已完成的变白
 
         total = len(self.tasks)
         done = sum(1 for t in self.tasks if t["done"])
@@ -142,6 +143,12 @@ class TodoApp:
         if not messagebox.askyesno("确认", "确定要清除所有已完成的待办吗？"):
             return
         self.tasks = [t for t in self.tasks if not t["done"]]
+        self.save_tasks()
+        self.refresh()
+
+    def complete_all(self):
+        for task in self.tasks:
+            task["done"] = True
         self.save_tasks()
         self.refresh()
 
